@@ -1,14 +1,11 @@
-// Recebe os dados do BD -> No caso de agora dos dados mocados He He
 const data = require('../data/usuario.json');
 
-// -> Cadastra um novo usuário
 const cadastrarUsuario = (req, res) => {
-    const novoUsuario = req.body;
-    data.usuarios.push(novoUsuario);
-    res.status(201).json(novoUsuario);
+    const novoUsuario = req.body; // Recebe o dado escrito em JSON
+    data.usuarios.push(novoUsuario); // Informa o novo dado
+    res.status(201).json(novoUsuario); // Retorna o novo dado 
 };
 
-// -> Lista todos os usuários
 const buscarUsuarios = (req, res) => {
     if (!data.usuarios) {
         res.status(404).json({ msg: 'Dados não encontrados' });
@@ -16,12 +13,10 @@ const buscarUsuarios = (req, res) => {
     res.json(data.usuarios);
 };
 
-// -> Fa a busca do usuário por ID
 const buscarUsuariosPorID = (req, res) => {
-    //Converte o id para inteiro
-    const usuarioId = parseInt(req.params.id);
-    //Compara se o id informado é igual a um id existente
-    const usuario = data.usuarios.find(item => item.id === usuarioId);
+    const usuarioId = parseInt(req.params.id); //Converte o id para inteiro
+    const usuario = data.usuarios.find(item => item.id === usuarioId); //Compara se o id informado é igual a um id existente
+
     //Verifica se o usuário existe ou não
     if (usuario) {
         res.json(usuario);
@@ -33,7 +28,6 @@ const buscarUsuariosPorID = (req, res) => {
 const editarUsuario = (req, res) => {
     const usuarioId = parseInt(req.params.id);
     const novoUsuarioIndex = req.body;
-
     const usuarioIndex = data.usuarios.findIndex(item => item.id === usuarioId);
 
     if (!usuarioIndex) {
