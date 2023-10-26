@@ -14,4 +14,4 @@ app.delete('/api/usuarios/:id', usuarioController.deletarUsuario);
 
 app.listen(port, () => {
     console.log(`Servidor sendo utilizado na porta ${port}`)
-})
+});
