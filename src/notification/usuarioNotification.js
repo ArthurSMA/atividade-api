@@ -1,13 +1,9 @@
-const naoEncontrado = "Usuário não encontrado";
-const invalido = "Dados inválidos";
-const cadastrado = "Usuário cadastrado com êxito"; 
-const editado = "Usuário editado com êxito";
-const removido = "Usuário removido"
+const msg = [
+    "200 - Operação realizada com sucesso", //0
+    "201 - Cadastrado com sucesso", //1
+    "400 - Dados Inválidos", //2
+    "401 - Sem autorização", //3
+    "404 - Dados não encontrados", //4
+];
 
-module.exports = {
-    naoEncontrado,
-    invalido,
-    cadastrado,
-    editado,
-    removido
-};
+module.exports = msg;

@@ -3,20 +3,18 @@ const notification = require("../notification/usuarioNotification");
 
 const cadastrarUsuario = (req, res) => {
     const novoUsuario = req.body;
- 
+
     data.usuarios.push(novoUsuario);
 
     novoUsuario
         ? res.status(201).json(novoUsuario)
-        : res.json(notification.invalido);
-
-    res.json({ msg: "Erro ao tentar acessar o servidor!" });
+        : res.json(notification.msg[2]);
 };
 
 const buscarUsuarios = (req, res) => {
     data.usuarios
         ? res.status(200).json(data.usuarios)
-        : res.status(404).json(notification.naoEncontrado);
+        : res.status(404).json(notification.msg[4]);
 };
 
 const buscarUsuariosPorID = (req, res) => {
@@ -25,9 +23,7 @@ const buscarUsuariosPorID = (req, res) => {
 
     usuario
         ? res.status(200).json(usuario)
-        : res.status(404).json(notification.naoEncontrado);
-
-    res.json({ msg: "Erro ao tentar acessar o servidor!" });
+        : res.status(404).json(notification.msg[4]);
 };
 
 const editarUsuario = (req, res) => {
@@ -38,7 +34,7 @@ const editarUsuario = (req, res) => {
     );
 
     if (usuarioIndex === -1) {
-        return res.status(404).json({ msg: "Usuário não encontrado" });
+        return res.status(404).json(notification.msg[4]);
     }
 
     data.usuarios[usuarioIndex] = {
@@ -54,7 +50,7 @@ const deletarUsuario = (req, res) => {
     const usuario = data.usuarios.findIndex((item) => item.id === usuarioId);
 
     if (usuario === -1) {
-        return res.status(404).json({ msg: "Usuário não encontrados" });
+        return res.status(404).json(notification.msg[4]);
     }
 
     data.usuarios.splice(usuario, 1);
