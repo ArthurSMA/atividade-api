@@ -6,4 +6,4 @@ const msg = [
     "404 - Dados não encontrados", //4
 ];
 
-module.exports = msg;
+module.exports = { msg };
