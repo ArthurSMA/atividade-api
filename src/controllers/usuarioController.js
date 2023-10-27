@@ -1,30 +1,33 @@
 const data = require("../data/usuario.json");
+const notification = require("../notification/usuarioNotification");
 
 const cadastrarUsuario = (req, res) => {
     const novoUsuario = req.body;
-
+ 
     data.usuarios.push(novoUsuario);
 
-    res.status(201).json(novoUsuario);
+    novoUsuario
+        ? res.status(201).json(novoUsuario)
+        : res.json(notification.invalido);
+
+    res.json({ msg: "Erro ao tentar acessar o servidor!" });
 };
 
 const buscarUsuarios = (req, res) => {
-    if (!data.usuarios) {
-        res.status(404).json({ msg: "Dados não encontrados" });
-    }
-
-    res.json(data.usuarios);
+    data.usuarios
+        ? res.status(200).json(data.usuarios)
+        : res.status(404).json(notification.naoEncontrado);
 };
 
 const buscarUsuariosPorID = (req, res) => {
     const usuarioId = parseInt(req.params.id);
     const usuario = data.usuarios.find((item) => item.id === usuarioId);
 
-    if (usuario) {
-        res.json(usuario);
-    } else {
-        res.status(404).json({ messangem: "Dado não encontrado" });
-    }
+    usuario
+        ? res.status(200).json(usuario)
+        : res.status(404).json(notification.naoEncontrado);
+
+    res.json({ msg: "Erro ao tentar acessar o servidor!" });
 };
 
 const editarUsuario = (req, res) => {
@@ -34,8 +37,8 @@ const editarUsuario = (req, res) => {
         (item) => item.id === usuarioId
     );
 
-    if (!usuarioIndex) {
-        return res.status(404).json({ msg: "Usuario não encontrado" });
+    if (usuarioIndex === -1) {
+        return res.status(404).json({ msg: "Usuário não encontrado" });
     }
 
     data.usuarios[usuarioIndex] = {
@@ -51,7 +54,7 @@ const deletarUsuario = (req, res) => {
     const usuario = data.usuarios.findIndex((item) => item.id === usuarioId);
 
     if (usuario === -1) {
-        return res.status(404).json({ msg: "não foi possível encontrar" });
+        return res.status(404).json({ msg: "Usuário não encontrados" });
     }
 
     data.usuarios.splice(usuario, 1);
