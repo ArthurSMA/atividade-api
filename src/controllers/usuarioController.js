@@ -34,6 +34,8 @@ const buscarUsuariosPorID = (req, res) => {
 };
 
 const editarUsuario = (req, res) => {
+    if (!req.body) return res.status(400).json(notification.msg[2]);
+
     const usuarioId = parseInt(req.params.id);
     const novoUsuarioIndex = req.body;
     const usuarioIndex = data.usuarios.findIndex(
