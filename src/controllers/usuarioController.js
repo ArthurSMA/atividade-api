@@ -2,13 +2,20 @@ const data = require("../data/usuario.json");
 const notification = require("../notification/usuarioNotification");
 
 const cadastrarUsuario = (req, res) => {
+    if (!req.body) return res.status(400).json(notification.msg[2]);
+
     const novoUsuario = req.body;
+    const usuarioCadastrado = data.usuarios.find(
+        (usuario) =>
+            usuario.id === novoUsuario.id || usuario.nome === novoUsuario.nome
+    );
 
-    data.usuarios.push(novoUsuario);
-
-    novoUsuario
-        ? res.status(201).json(novoUsuario)
-        : res.json(notification.msg[2]);
+    if (usuarioCadastrado) {
+        res.status(400).json(notification.msg[5]);
+    } else {
+        data.usuarios.push(novoUsuario);
+        res.status(201).json(novoUsuario);
+    }
 };
 
 const buscarUsuarios = (req, res) => {
