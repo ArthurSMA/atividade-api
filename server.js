@@ -1,15 +1,20 @@
 const express = require("express");
 const cors = require("cors");
+const usuarioRoutes = require("./src/routes/usuarioRoutes");
 
-const port = 9090;
 const app = express();
+const port = process.env.PORT || 9090;
 
 app.use(express.json());
 app.use(cors());
 
-const usuarioRoutes = require("./src/routes/usuarioRoutes");
 app.use("/api/usuarios", usuarioRoutes);
 
 app.listen(port, () => {
-    console.log(`Servidor sendo utilizado na porta ${port}`);
+  console.log(`Servidor sendo utilizado na porta ${port}`);
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Erro interno do servidor");
 });
